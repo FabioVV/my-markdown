@@ -62,7 +62,7 @@ class Documenter extends HTMLElement {
         this.inputHidden.value = contentElement.innerHTML
 
         restore()
-
+        
         window.scrollTo(0, scrollPosition)
     }
 
@@ -83,9 +83,32 @@ class Documenter extends HTMLElement {
         } else if (event.ctrlKey && event.key === 'y') {
             event.preventDefault()
             this.textHistoryManager.redo()
-        }
-        this.handleMarkdown()
 
+        } else if (event.key === 'Backspace' || event.key === "Delete"){
+            event.preventDefault()
+
+            let selection = window.getSelection()
+
+            if(!selection.rangeCount){
+                selection.deleteFromDocument()
+
+            } else {        
+                const range = selection.getRangeAt(0)
+        
+                if (!this.contentDiv.contains(range.commonAncestorContainer)) {
+                    return
+                }
+        
+                const currentNode = range.startContainer
+                range.setStart(currentNode, range.startOffset - 1);
+
+                range.deleteContents()
+            }
+
+            this.textHistoryManager.saveState()
+        }
+
+        this.handleMarkdown()
     }
 
     handleEnter(event) {
@@ -117,12 +140,12 @@ class Documenter extends HTMLElement {
         }
     }
 
-    handleBlur(event) {
+    handleBlur() {
         this.saveCaret = this.textHistoryManager.saveCaretPosition(this.contentDiv)
         window.getSelection().removeAllRanges()
     }
 
-    handleFocus(event) {
+    handleFocus() {
         if (this.saveCaret) {
             this.saveCaret()
         }
@@ -184,14 +207,11 @@ class Documenter extends HTMLElement {
           const formData = new FormData()
           formData.append('image', file)
           
-          const PAGE_SLUG = document.getElementById('markdown-file').dataset.id
-          const BOOK_SLUG = document.getElementById('markdown-file').dataset.bookId
-
           try {
-            const response = await fetch(`/books/${BOOK_SLUG}/pages/${PAGE_SLUG}/upload_markdown_image`, {
+            const response = await fetch(`path_here`, {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    // 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
                 body: formData
             })
@@ -328,7 +348,6 @@ function getTextNodeAtPosition(root, index){
     }
 }
 
-
 function createButton(className, title, action, iconClass) {
     const button = document.createElement('div');
     button.className = `${className} editor-button`;
@@ -406,9 +425,6 @@ function parseMarkdown(content = ""){
     })
     return content
 }
-
-
-
 
 
 customElements.define('doc-menter', Documenter)

@@ -1,92 +1,103 @@
 :where(doc-menter){
     min-width: 0;
-    }
+}
 
-    .doc-menter-content{
+.doc-menter-content{
     min-block-size: 50dvh;
     text-align: start;
     white-space: break-spaces;
-    
+
     &:focus,
     &:active {
         border: none;
         outline: none;
     }
-    }
+}
 
 
-    :where(.h1, .h2, .h3, .h4, .h5, .h6) {
+:where(.h1, .h2, .h3, .h4, .h5, .h6) {
     font-weight: 800;
     hyphens: auto;
     letter-spacing: -0.02ch;
     line-height: 1.1;
     overflow-wrap: break-word;
     text-wrap: balance;
-    }
+}
 
-    .h1 {
+.h1 {
     font-size: 2em;
     display: inline;
-    }
+}
 
-    .h2 {
+.h2 {
     font-size: 1.5em;
     display: inline;
-    }
+}
 
-    .h3 {
+.h3 {
     font-size: 1.17em;
     display: inline;
 
-    }
+}
 
-    .h4 {
+.h4 {
     font-size: 1em;
     display: inline;
+}
 
-    }
-
-    .h5 {
+.h5 {
     font-size: 0.83em;
     display: inline;
+}
 
-    }
-
-    .h6 {
+.h6 {
     font-size: 0.67em;
     display: inline;
-    }
+}
 
-    :is(p, ul, ol, dl, blockquote, pre, figure, hr) {
+:is(p, ul, ol, dl, blockquote, pre, figure, hr) {
     margin-block: 0.65lh;
     overflow-wrap: break-word;
     text-wrap: pretty;
-    }
+}
 
-    :is(pre, code, .pre, .code) {
+:is(pre, code, .pre, .code) {
     background-color: 96% 0.005 96;
     border: 1px solid 75% 0.005 96;
     border-radius: 0.3em;
     font-size: 0.85em;
-    }
+}
 
-    code {
+code {
     padding: 0.1em 0.3em;
     white-space: pre-wrap;
-    }
+}
 
-    :is(blockquote, .quote) {
+:is(blockquote, .quote) {
     font-style: italic;
     margin: 0 3ch;
 
     p {
         hyphens: none;
     }
-    }
+}
 
 .toolbox-edit-markdown{
     display: inline-flex;
     align-items: center;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 1.5rem;
+}
+
+.toolbox-edit-markdown > div{
+    cursor: pointer;
+}
+
+.toolbox-edit-markdown > div > i{
+    font-size: 1.9em;
+}
+
+#markdown-load-toolbox{
+    display: flex;
+    justify-content: center;
 }
